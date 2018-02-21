@@ -49,3 +49,5 @@ app.directive('bicyclingLayer', require('./directives/bicycling-layer'));
 app.directive('customControl', require('./directives/custom-control'));
 app.directive('customMarker', require('./directives/custom-marker'));
 app.directive('marker', require('./directives/marker'));
+app.directive('directions', require('./directives/directions'));
+app.directive('drawingManager', require('./directives/drawing-manager'));
