@@ -4,10 +4,7 @@ const angular = require('angular');
 
 import CustomMarker2 from './custom-marker.js';
     
-'use strict';
 var parser, $timeout, $compile, NgMap;
-
-
 var linkFunc = function(orgHtml, varsToWatch) {
   //console.log('orgHtml', orgHtml, 'varsToWatch', varsToWatch);
 
