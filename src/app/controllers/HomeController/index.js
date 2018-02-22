@@ -2,44 +2,8 @@
 /* global MarkerClusterer */
 
 export default class {
-    constructor(NgMap) {
-        console.log('inside constructor!!')
-        
-        // let locations = [
-        //     {lat: -31.563910, lng: 147.154312},
-        //     {lat: -33.718234, lng: 150.363181},
-        //     {lat: -33.727111, lng: 150.371124},
-        //     {lat: -33.848588, lng: 151.209834},
-        //     {lat: -33.851702, lng: 151.216968},
-        //     {lat: -34.671264, lng: 150.863657},
-        //     {lat: -35.304724, lng: 148.662905},
-        //     {lat: -36.817685, lng: 175.699196},
-        //     {lat: -36.828611, lng: 175.790222},
-        //     {lat: -37.750000, lng: 145.116667},
-        //     {lat: -37.759859, lng: 145.128708},
-        //     {lat: -37.765015, lng: 145.133858},
-        //     {lat: -37.770104, lng: 145.143299},
-        //     {lat: -37.773700, lng: 145.145187},
-        //     {lat: -37.774785, lng: 145.137978},
-        //     {lat: -37.819616, lng: 144.968119},
-        //     {lat: -38.330766, lng: 144.695692},
-        //     {lat: -39.927193, lng: 175.053218},
-        //     {lat: -41.330162, lng: 174.865694},
-        //     {lat: -42.734358, lng: 147.439506},
-        //     {lat: -42.734358, lng: 147.501315},
-        //     {lat: -42.735258, lng: 147.438000},
-        //     {lat: -43.999792, lng: 170.463352}
-        // ]        
-      
-        // // Create an array of alphabetical characters used to label the markers.
-        // var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        
-        // let markers = locations.map((location, i) => {
-        //     return new google.maps.Marker({
-        //         position: location,
-        //         label: labels[i % labels.length]
-        //     });
-        // });      
+    constructor(NgMap, $timeout) {
+
         
         // NgMap.getMap().then((map) => {        
         //     var markerCluster = new MarkerClusterer(map, markers,
@@ -48,8 +12,33 @@ export default class {
         
         this.firstThing = 'AAAAAAAAAAAAAA';
         this.otherThings = ['BBBBBBB','CCCCCCCC'];    
+        
+        NgMap.getMap().then((map) => {
+            this.map = map;
+        });
+          
+        this.stores = {
+            foo: { position:[41, -87], items: [1,2,3,4]},
+            bar:{ position:[41, -83], items: [5,6,7,8]}
+        };
+          
+        this.googleMapsUrl = 'https://maps.google.com/maps/api/js';
+        this.pauseLoading=true;
+        console.log("Starting a timer to wait for 2 seconds before the map will start loading");
+        
+        $timeout(() => {
+            console.debug("Showing the map. The google maps api should load now.");
+            this.pauseLoading=false;
+        }, 2000);
     }
 
+
+
+    showStore(evt, id) {
+        this.store = this.stores[id];
+        this.map.showInfoWindow('foo', this);
+    }
+    
     showCustomMarker(evt) {
         this.NgMap.getMap().then((map) => {
             map.customMarkers.foo.setVisible(true);
@@ -65,5 +54,38 @@ export default class {
     click() {
         alert(1);
     };
+    
+    
+    toggleHeatmap(event) {
+      this.heatmap.setMap(this.heatmap.getMap() ? null : this.map);
+    };
+
+    changeGradient() {
+      var gradient = [
+        'rgba(0, 255, 255, 0)',
+        'rgba(0, 255, 255, 1)',
+        'rgba(0, 191, 255, 1)',
+        'rgba(0, 127, 255, 1)',
+        'rgba(0, 63, 255, 1)',
+        'rgba(0, 0, 255, 1)',
+        'rgba(0, 0, 223, 1)',
+        'rgba(0, 0, 191, 1)',
+        'rgba(0, 0, 159, 1)',
+        'rgba(0, 0, 127, 1)',
+        'rgba(63, 0, 91, 1)',
+        'rgba(127, 0, 63, 1)',
+        'rgba(191, 0, 31, 1)',
+        'rgba(255, 0, 0, 1)'
+      ]
+      this.heatmap.set('gradient', this.heatmap.get('gradient') ? null : gradient);
+    }
+
+    changeRadius() {
+      this.heatmap.set('radius', this.heatmap.get('radius') ? null : 20);
+    }
+
+    changeOpacity() {
+      this.heatmap.set('opacity', this.heatmap.get('opacity') ? null : 0.2);
+    }    
 
 }
