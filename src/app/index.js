@@ -2,19 +2,13 @@ const angular = require('angular');
 
 require('angular-ui-bootstrap');
 require('jquery/dist/jquery');
-//require('ngmap/build/scripts/ng-map.js');
-
-//import '../../node_modules/ngmap/build/scripts/ng-map.js'
 
 import '../../node_modules/bootstrap/dist/css/bootstrap';
 import '../../node_modules/bootstrap/dist/css/bootstrap-theme';
 import '../../node_modules/font-awesome/css/font-awesome.css';
 
-
 const app = angular.module('ng-maps-app', ['ui.bootstrap']);
 
-
-// import controllers and register
 
 import HomeController from './controllers/HomeController';
 app.controller('HomeController', HomeController);
@@ -41,7 +35,6 @@ app.provider('NgMap', require('./services/ng-map'));
 app.factory('NgMapPool', require('./services/ng-map-pool'));
 
 // directives
-
 app.directive('map', require('./directives/ng-map'));
 app.directive('ngMap', require('./directives/ng-map'));
 app.directive('kmlLayer', require('./directives/kml-layer'));
