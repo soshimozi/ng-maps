@@ -77,8 +77,7 @@ export default function(env, argv) {
             }),
             new CopyWebpackPlugin([
                 // {output}/to/directory/file.txt
-                { from: '../index.html' },
-                { from: '../sylvester.js' }
+                { from: '../index.html' }
 
             ], {
                 copyUnmodified: true
